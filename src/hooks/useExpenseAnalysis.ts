@@ -1,15 +1,24 @@
-import type { AnalysisResult, Expense } from "@/types/clientTypes";
+import type {
+  AnalysisResult,
+  AnalysisStatus,
+  Expense,
+} from "@/types/clientTypes";
 import { useState } from "react";
 import { requestClassify } from "@/sevices/classify";
 import { calculateEmotion, calculateSummary } from "@/utils/calculate";
 import { requestInsight } from "@/sevices/insight";
+import { HttpError } from "@/types/errorTypes";
 
 export function useExpenseAnalysis() {
   const [result, setResult] = useState<AnalysisResult | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState<AnalysisStatus>("idle");
+  const [error, setError] = useState<string | null>(null);
 
   async function analyze(expenses: Expense[]) {
-    setIsLoading(true);
+    if (status === "loading") return;
+
+    setStatus("loading");
+    setError(null);
 
     try {
       // 1: LLM 분류
@@ -37,16 +46,26 @@ export function useExpenseAnalysis() {
         emotionScore,
         insight,
       });
+      setStatus("success");
     } catch (err) {
-      console.error(err);
-    } finally {
-      setIsLoading(false);
+      if (err instanceof HttpError) {
+        if (err.status === 503) {
+          setError("현재 분석 요청이 많습니다. 잠시 후 다시 시도해주세요.");
+        } else {
+          setError("분석 중 오류가 발생했습니다.");
+        }
+      } else {
+        setError("알 수 없는 오류가 발생했습니다.");
+      }
+
+      setStatus("error");
     }
   }
 
   return {
     result,
-    isLoading,
+    status,
+    error,
     analyze,
   };
 }

@@ -1,5 +1,3 @@
-import type { EmotionScore, ExpenseSummary } from "./clientTypes";
-
 export type ExpenseCategory = "fixed" | "routine" | "emotional";
 
 export type LLMClassification = {
@@ -13,7 +11,7 @@ export type LLMInsight = {
   summaryComment: string;
 
   // 소비 패턴 해석 리스트
-  patternAnaysis: string[];
+  patternAnalysis: string[];
 
   // 개선 제안 리스트
   improvementSuggestions: string[];

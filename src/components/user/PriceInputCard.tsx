@@ -24,9 +24,9 @@ export default function PriceInputCard({
   return (
     <CommonAppCard className={`${shouldShake ? "shake" : ""}`}>
       <div className="w-full flex px-3 justify-between items-center gap-4 h-16">
-        <button className="cursor-pointer" onClick={() => onRemove(data.id)}>
-          <CircleMinus className="text-red-500" />
-        </button>
+        <div className="cursor-pointer" onClick={() => onRemove(data.id)}>
+          <CircleMinus className="text-red-500 w-4 h-4" />
+        </div>
 
         <Input
           type="text"

@@ -57,3 +57,6 @@ export type AnalysisResult = {
   emotionScore: EmotionScore;
   insight: LLMInsight;
 };
+
+// 분석 현황 타입
+export type AnalysisStatus = "idle" | "loading" | "success" | "error";

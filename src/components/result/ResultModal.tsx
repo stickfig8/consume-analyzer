@@ -19,7 +19,10 @@ export default function ResultModal({
   if (!isOpen) return null;
   return (
     <ModalBackground onClose={onClose}>
-      <article className="w-[80%] h-[80%] bg-white rounded-xl">
+      <article
+        className="w-[80%] h-[80%] bg-white rounded-xl overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
         {status === "success" && result && (
           <div className="flex flex-col gap-3">
             <p>{result.insight.summaryComment}</p>

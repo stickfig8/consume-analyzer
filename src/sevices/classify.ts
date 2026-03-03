@@ -1,6 +1,9 @@
 import type { Expense } from "@/types/clientTypes";
+import type { LLMClassification } from "@/types/responseTypes";
 
-export async function classifyExpenses(expenses: Expense[]) {
+export async function requestClassify(
+  expenses: Expense[],
+): Promise<LLMClassification[]> {
   const res = await fetch("/api/classify", {
     method: "POST",
     headers: {

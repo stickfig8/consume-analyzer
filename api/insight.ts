@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { classifyPrompt } from "./prompts/prompts";
+import { insightPrompt } from "./prompts/prompts";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
@@ -9,10 +9,10 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
-    const expenses = req.body;
+    const payload = req.body;
 
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash-lite",
+      model: "gemini-2.5-flash",
     });
 
     const result = await model.generateContent({
@@ -22,9 +22,9 @@ export default async function handler(req: any, res: any) {
           parts: [
             {
               text:
-                classifyPrompt +
-                "\n\nClassify the following data:\n" +
-                JSON.stringify(expenses),
+                insightPrompt +
+                "\n\n분석 데이터:\n" +
+                JSON.stringify(payload, null, 2),
             },
           ],
         },

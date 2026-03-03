@@ -1,50 +1,20 @@
+import type { EmotionScore, ExpenseSummary } from "./clientTypes";
+
 export type ExpenseCategory = "fixed" | "routine" | "emotional";
 
-export type LLMResult = {
+export type LLMClassification = {
   id: string;
   category: ExpenseCategory;
   reason?: string;
 };
 
-export type LLMResponse = LLMResult[];
-
-export type ExpenseSummary = {
-  totalExpense: number;
-
-  breakdown: {
-    fixed: number;
-    routine: number;
-    emotional: number;
-  };
-
-  percentage: {
-    fixed: number;
-    routine: number;
-    emotional: number;
-  };
-};
-
-export type EmotionLevel = "low" | "medium" | "high";
-
-export type EmotionScore = {
-  score: number; // 0 ~ 100
-  level: EmotionLevel;
-};
-
 export type LLMInsight = {
   // 전체 요약 문장
-  overallComment: string;
+  summaryComment: string;
 
   // 소비 패턴 해석 리스트
-  patternAnalysis: string[];
+  patternAnaysis: string[];
 
   // 개선 제안 리스트
-  suggestions: string[];
-};
-
-// 최종 UI 전달 자료형
-export type AnalysisResult = {
-  summary: ExpenseSummary;
-  emotionScore: EmotionScore;
-  insight: LLMInsight;
+  improvementSuggestions: string[];
 };

@@ -23,7 +23,7 @@ export default async function handler(req: any, res: any) {
             {
               text:
                 classifyPrompt +
-                "\n\nClassify the following data:\n" +
+                "\n\n분석 데이터:\n" +
                 JSON.stringify(expenses),
             },
           ],

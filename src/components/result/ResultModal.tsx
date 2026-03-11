@@ -2,12 +2,13 @@ import type { AnalysisResult, AnalysisStatus } from "@/types/clientTypes";
 import ModalBackground from "../common/ModalBackground";
 import OverViewCard from "./OverViewCard";
 import CommonReportCard from "./common/CommonReportCard";
-import { Button } from "../ui/button";
 
 import { useExportReport } from "@/hooks/useExportReport";
 import ResultModalTitle from "./common/ResultModalTitle";
-import { useEffect } from "react";
-import { useBlockOuterScroll } from "@/hooks/useBlockOuterScroll";
+import ModalButtons from "./common/ModalButtons";
+import ErrorPresentation from "./request/ErrorPresentation";
+import LoadingIndicator from "./request/LoadingIndicator";
+//import { useBlockOuterScroll } from "@/hooks/useBlockOuterScroll";
 
 type Props = {
   isOpen: boolean;
@@ -15,6 +16,7 @@ type Props = {
   result: AnalysisResult | null;
   error: string | null;
   onClose: () => void;
+  cancel: () => void;
 };
 
 export default function ResultModal({
@@ -23,14 +25,20 @@ export default function ResultModal({
   result,
   error,
   onClose,
+  cancel,
 }: Props) {
   if (!isOpen) return null;
 
   const { reportRef, handleDownloadPDF, isExporting } = useExportReport();
-  useBlockOuterScroll(isOpen);
+  //useBlockOuterScroll(isOpen);
 
   return (
-    <ModalBackground onClose={onClose}>
+    <ModalBackground
+      onClose={() => {
+        cancel();
+        onClose();
+      }}
+    >
       <article
         className={`max-w-[880px] w-full ${isExporting ? "h-auto" : "h-[85%]"} bg-white rounded-xl flex flex-col gap-7 pt-5`}
         onClick={(e) => e.stopPropagation()}
@@ -59,37 +67,29 @@ export default function ResultModal({
               />
 
               {/* 버튼 목록 */}
-              <div
-                className={`w-full flex justify-end gap-2 mt-5 ${isExporting ? "hidden" : ""}`}
-              >
-                <Button
-                  className="bg-[var(--fixed-color)] hover:bg-[var(--fixed-color)]/80 cursor-pointer"
-                  onClick={onClose}
-                >
-                  취소하기
-                </Button>
-                <Button
-                  className="cursor-pointer"
-                  disabled={isExporting}
-                  onClick={handleDownloadPDF}
-                >
-                  저장하기
-                </Button>
-              </div>
+              <ModalButtons
+                isExporting={isExporting}
+                onClose={onClose}
+                onSave={handleDownloadPDF}
+              />
             </div>
           </div>
         )}
-
-        {status === "loading" && (
-          <div className="text-center py-10">
-            <p className="text-lg font-medium">분석 중입니다...</p>
-          </div>
+        {/* 로딩 인디케이터 */}
+        {(status === "classifying" ||
+          status === "calculating" ||
+          status === "insighting") && (
+          <LoadingIndicator
+            status={status}
+            onCancel={() => {
+              cancel();
+              onClose();
+            }}
+          />
         )}
-
+        {/* 에러 인디케이터 */}
         {status === "error" && (
-          <div className="text-center py-10 text-red-500">
-            <p>{error}</p>
-          </div>
+          <ErrorPresentation error={error} onClose={onClose} />
         )}
       </article>
     </ModalBackground>

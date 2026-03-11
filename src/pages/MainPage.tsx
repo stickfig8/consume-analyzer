@@ -48,6 +48,7 @@ export default function MainPage() {
         result={analysis.result}
         error={analysis.error}
         onClose={() => setIsModalOpen(false)}
+        cancel={analysis.cancel}
       />
     </MainContainer>
   );

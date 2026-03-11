@@ -59,4 +59,13 @@ export type AnalysisResult = {
 };
 
 // 분석 현황 타입
-export type AnalysisStatus = "idle" | "loading" | "success" | "error";
+export type AnalysisStatus =
+  | "idle"
+  | "classifying"
+  | "calculating"
+  | "insighting"
+  | "success"
+  | "error";
+
+// 로딩 현황 타입
+export type LoadingStatus = "classifying" | "calculating" | "insighting";

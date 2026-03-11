@@ -24,15 +24,15 @@ export default function UsageTooltip({ onTestClick }: Props) {
         <TooltipContent
           side="bottom"
           align="start"
-          className="w-fit px-5 rounded-xl shadow-xl border bg-popover [&_svg]:hidden!"
+          className="w-fit p-5 rounded-xl shadow-xl border bg-popover [&_svg]:hidden!"
         >
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3">
             {/* 제목 */}
             <div>
-              <h3 className="text-sm font-semibold tracking-tight">
+              <h3 className="text-sm font-semibold text-muted-foreground tracking-tight">
                 소비 분석 사용 방법
               </h3>
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-xs text-muted-foreground mt-4">
                 항목과 금액을 입력하면 소비 패턴을 분석합니다.
               </p>
             </div>

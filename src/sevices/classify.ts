@@ -1,32 +1,36 @@
+import axios from "axios";
 import type { Expense } from "@/types/clientTypes";
-import { HttpError } from "@/types/errorTypes";
 import type { LLMClassification } from "@/types/responseTypes";
+import { HttpError } from "@/types/errorTypes";
 import { retry } from "@/utils/fetchUtils";
 
 export async function requestClassify(
   expenses: Expense[],
+  signal?: AbortSignal,
 ): Promise<LLMClassification[]> {
   return retry(async () => {
-    const res = await fetch("/api/classify", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(
+    try {
+      const res = await axios.post(
+        "/api/classify",
         expenses.map(({ id, item, memo }) => ({
           id,
           item,
           memo,
         })),
-      ),
-    });
+        { signal },
+      );
 
-    if (!res.ok) {
-      if (!res.ok) {
-        throw new HttpError("Classify request failed", res.status);
+      return res.data;
+    } catch (err: any) {
+      if (axios.isCancel(err)) {
+        throw new HttpError("Request cancelled", 499);
       }
-    }
 
-    return res.json();
+      if (err.response) {
+        throw new HttpError("Classify request failed", err.response.status);
+      }
+
+      throw err;
+    }
   });
 }

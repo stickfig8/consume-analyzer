@@ -1,26 +1,33 @@
+import axios from "axios";
 import type { InsightPayload } from "@/types/clientTypes";
-import { HttpError } from "@/types/errorTypes";
 import type { LLMInsight } from "@/types/responseTypes";
+import { HttpError } from "@/types/errorTypes";
 import { retry } from "@/utils/fetchUtils";
 
 export async function requestInsight(
   data: InsightPayload,
+  signal?: AbortSignal,
 ): Promise<LLMInsight> {
   return retry(async () => {
-    const res = await fetch("/api/insight", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    try {
+      const res = await axios.post("/api/insight", data, {
+        signal,
+      });
 
-    if (!res.ok) {
-      if (!res.ok) {
-        throw new HttpError("Insight request failed", res.status);
+      return res.data;
+    } catch (err: any) {
+      // 요청 취소
+      if (axios.isCancel(err) || err.name === "CanceledError") {
+        throw new HttpError("Request cancelled", 499);
       }
-    }
 
-    return res.json();
+      // 서버 응답 에러
+      if (err.response) {
+        throw new HttpError("Insight request failed", err.response.status);
+      }
+
+      // 기타 네트워크 에러
+      throw err;
+    }
   });
 }

@@ -1,8 +1,10 @@
 import type { AnalysisResult, AnalysisStatus } from "@/types/clientTypes";
 import ModalBackground from "../common/ModalBackground";
 import OverViewCard from "./OverViewCard";
-import { X } from "lucide-react";
 import CommonReportCard from "./common/CommonReportCard";
+import { Button } from "../ui/button";
+
+import { useExportReport } from "@/hooks/useExportReport";
 
 type Props = {
   isOpen: boolean;
@@ -20,38 +22,56 @@ export default function ResultModal({
   onClose,
 }: Props) {
   if (!isOpen) return null;
+  const { reportRef, handleDownloadPDF, isExporting } = useExportReport();
+
   return (
     <ModalBackground onClose={onClose}>
       <article
-        className="max-w-[880px] w-full h-[85%] bg-white rounded-xl flex flex-col gap-7 pt-5"
+        className={`max-w-[880px] w-full ${isExporting ? "h-auto" : "h-[85%]"} bg-white rounded-xl flex flex-col gap-7 pt-5`}
         onClick={(e) => e.stopPropagation()}
+        ref={reportRef}
       >
-        {/* 헤더 */}
-        <header className="w-full flex justify-between px-5">
-          <div></div>
-          <h1>분석 결과</h1>
-          <button onClick={onClose} className="cursor-pointer">
-            <X />
-          </button>
-        </header>
-
         {/* 결과 */}
         {status === "success" && result && (
-          <div className="flex flex-col gap-3 h-full overflow-y-auto scrollbar-style p-5">
-            <OverViewCard
-              summary={result.summary}
-              emotionScore={result.emotionScore}
-              summaryComment={result.insight.summaryComment}
-            />
-            <CommonReportCard
-              title="📋 상세 분석"
-              contents={result.insight.patternAnalysis}
-            />
-            <CommonReportCard
-              title="🚀 개선"
-              contents={result.insight.improvementSuggestions}
-              isImprove={true}
-            />
+          <div className="w-full h-full flex flex-col gap-7">
+            <h1 className="mx-auto">분석 결과</h1>
+            <div
+              className={`flex flex-col gap-3 scrollbar-style p-5 ${isExporting ? "overflow-visible max-h-none" : "h-full overflow-y-auto"}`}
+            >
+              <OverViewCard
+                summary={result.summary}
+                emotionScore={result.emotionScore}
+                summaryComment={result.insight.summaryComment}
+              />
+              <CommonReportCard
+                title="📋 상세 분석"
+                contents={result.insight.patternAnalysis}
+              />
+              <CommonReportCard
+                title="🚀 개선"
+                contents={result.insight.improvementSuggestions}
+                isImprove={true}
+              />
+
+              {/* 버튼 목록 */}
+              <div
+                className={`w-full flex justify-end gap-2 mt-5 ${isExporting ? "hidden" : ""}`}
+              >
+                <Button
+                  className="bg-[var(--fixed-color)] hover:bg-[var(--fixed-color)]/80 cursor-pointer"
+                  onClick={onClose}
+                >
+                  취소하기
+                </Button>
+                <Button
+                  className="cursor-pointer"
+                  disabled={isExporting}
+                  onClick={handleDownloadPDF}
+                >
+                  저장하기
+                </Button>
+              </div>
+            </div>
           </div>
         )}
 

@@ -8,6 +8,8 @@ export function useExpenseValidation() {
 
   const [shakeIds, setShakeIds] = useState<string[]>([]);
 
+  const [errorMessage, setErrorMessage] = useState<String | null>(null);
+
   function validate(expenses: Expense[]) {
     setHasSubmitted(true);
     const newErrors: Record<string, ExpenseError> = {};
@@ -32,6 +34,7 @@ export function useExpenseValidation() {
     });
 
     setErrors(newErrors);
+    setErrorMessage("빈 항목이 있습니다.");
 
     if (hasError) {
       const ids = Object.keys(newErrors);
@@ -59,12 +62,14 @@ export function useExpenseValidation() {
 
       return copy;
     });
+    setErrorMessage(null);
   }
 
   return {
     errors,
     hasSubmitted,
     shakeIds,
+    errorMessage,
     validate,
     clearFieldError,
   };

@@ -11,7 +11,7 @@ export default function CommonAppCard({ children, className }: Props) {
       className={cn(
         "rounded-2xl border bg-white shadow-sm w-full",
         "transition-all duration-200",
-        "hover:shadow-md",
+        "hover:shadow-lg",
         className,
       )}
     >

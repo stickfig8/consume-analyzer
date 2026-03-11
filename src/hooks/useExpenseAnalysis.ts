@@ -7,7 +7,6 @@ import { useState } from "react";
 import { requestClassify } from "@/sevices/classify";
 import { calculateEmotion, calculateSummary } from "@/utils/calculate";
 import { requestInsight } from "@/sevices/insight";
-import { HttpError } from "@/types/errorTypes";
 
 export function useExpenseAnalysis() {
   const [result, setResult] = useState<AnalysisResult | null>(null);

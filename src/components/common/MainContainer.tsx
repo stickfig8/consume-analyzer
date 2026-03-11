@@ -13,7 +13,6 @@ const StyledContainer = styled.main`
 
   display: flex;
   flex-direction: column;
-  gap: 16px;
 
   padding-top: 16px;
   padding-bottom: 16px;

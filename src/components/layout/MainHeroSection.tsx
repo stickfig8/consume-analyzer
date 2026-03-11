@@ -2,7 +2,7 @@ import CommonAppCard from "../common/CommonAppCard";
 
 export default function MainHeroSection() {
   return (
-    <CommonAppCard>
+    <CommonAppCard className="mb-6">
       <section className="w-full py-10 flex flex-col items-center text-center gap-6">
         <span className="text-sm px-3 py-1 bg-muted rounded-full">
           AI 소비 분석 서비스

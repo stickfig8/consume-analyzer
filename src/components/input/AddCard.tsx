@@ -1,4 +1,5 @@
 import { Plus } from "lucide-react";
+import { Button } from "../ui/button";
 
 type Props = {
   onClick: () => void;
@@ -6,11 +7,11 @@ type Props = {
 
 export default function AddCard({ onClick }: Props) {
   return (
-    <button
-      className="w-20 h-8 bg-green-400 flex justify-center items-center rounded-md shadow-md hover:brightness-95 cursor-pointer"
+    <Button
+      className="bg-[var(--fixed-color)] hover:bg-[var(--fixed-color)]/80 cursor-pointer w-12 h-8"
       onClick={onClick}
     >
       <Plus className="h-full" />
-    </button>
+    </Button>
   );
 }

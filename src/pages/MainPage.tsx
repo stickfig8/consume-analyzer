@@ -34,6 +34,7 @@ export default function MainPage() {
         errorMessage={validation.errorMessage}
         addCard={expenseInput.addCard}
         onAnalyze={handleAnalyze}
+        fillWithDummyData={expenseInput.fillWithDummyData}
       />
       <ExpenseInputSection
         {...expenseInput}

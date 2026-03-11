@@ -17,10 +17,6 @@ export default function MainHeroSection() {
           총 지출, 감정 소비 지수, 소비 성향까지 AI가 리포트 형태로
           분석해드립니다.
         </p>
-
-        <button className="px-6 py-3 rounded-xl bg-black text-white hover:opacity-80 transition cursor-pointer">
-          지금 시작하기
-        </button>
       </section>
     </CommonAppCard>
   );

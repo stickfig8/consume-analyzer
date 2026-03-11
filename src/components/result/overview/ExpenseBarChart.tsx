@@ -1,4 +1,4 @@
-import { getEmotionColor } from "@/lib/chartUtils";
+import { getEmotionColor } from "@/utils/chartUtils";
 import type { ExpenseSummary } from "@/types/clientTypes";
 import {
   Bar,

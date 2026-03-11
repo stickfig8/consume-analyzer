@@ -19,7 +19,7 @@ export default function ExpenseInputSection({
   clearFieldError,
 }: Props) {
   return (
-    <section className="flex flex-col">
+    <section className="flex flex-col min-h-70">
       <div className="flex flex-col gap-2 ">
         {expenses.map((expense) => (
           <PriceInputCard

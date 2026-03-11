@@ -19,11 +19,9 @@ export default function CommonReportCard({
           {contents.map((content, i) => (
             <p key={i} className="relative pl-4">
               {isImprove ? (
-                <span className="absolute left-0 top-[2px] text-primary">
-                  ✓
-                </span>
+                <span className="absolute left-0 top-0 text-primary">✓</span>
               ) : (
-                <span className="absolute left-0 top-[7px] w-1.5 h-1.5 rounded-full bg-foreground/40" />
+                <span className="absolute left-0 top-[8px] w-1.5 h-1.5 rounded-full bg-foreground/40" />
               )}
 
               {content}

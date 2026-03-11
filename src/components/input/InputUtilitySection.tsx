@@ -1,12 +1,14 @@
 import type { Expense } from "@/types/clientTypes";
 import CommonButton from "../common/CommonButton";
 import AddCard from "./AddCard";
+import UsageTooltip from "./UsageTooltip";
 
 type Props = {
   expenses: Expense[];
   errorMessage: String | null;
   addCard: () => void;
   onAnalyze: () => void;
+  fillWithDummyData: () => void;
 };
 
 export default function InputUtilitySection({
@@ -14,6 +16,7 @@ export default function InputUtilitySection({
   errorMessage,
   addCard,
   onAnalyze,
+  fillWithDummyData,
 }: Props) {
   const total = expenses.reduce((sum, expense) => sum + expense.price, 0);
   return (
@@ -24,6 +27,7 @@ export default function InputUtilitySection({
       </div>
 
       <div className="flex gap-2">
+        <UsageTooltip onTestClick={fillWithDummyData} />
         <AddCard onClick={addCard} />
         <CommonButton text="분석하기" onClick={onAnalyze} />
       </div>

@@ -5,6 +5,9 @@ import CommonReportCard from "./common/CommonReportCard";
 import { Button } from "../ui/button";
 
 import { useExportReport } from "@/hooks/useExportReport";
+import ResultModalTitle from "./common/ResultModalTitle";
+import { useEffect } from "react";
+import { useBlockOuterScroll } from "@/hooks/useBlockOuterScroll";
 
 type Props = {
   isOpen: boolean;
@@ -22,7 +25,9 @@ export default function ResultModal({
   onClose,
 }: Props) {
   if (!isOpen) return null;
+
   const { reportRef, handleDownloadPDF, isExporting } = useExportReport();
+  useBlockOuterScroll(isOpen);
 
   return (
     <ModalBackground onClose={onClose}>
@@ -33,8 +38,8 @@ export default function ResultModal({
       >
         {/* 결과 */}
         {status === "success" && result && (
-          <div className="w-full h-full flex flex-col gap-7">
-            <h1 className="mx-auto">분석 결과</h1>
+          <div className="w-full h-full flex flex-col gap-5">
+            <ResultModalTitle />
             <div
               className={`flex flex-col gap-3 scrollbar-style p-5 ${isExporting ? "overflow-visible max-h-none" : "h-full overflow-y-auto"}`}
             >

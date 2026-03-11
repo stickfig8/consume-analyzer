@@ -79,7 +79,13 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
+  --primary: #059669;
   --modal-bg: rgba(0, 0, 0, 0.2);
+  --fixed-color: #64748b; /* slate-500 */
+  --routine-color: #0ea5e9; /* sky-500 */
+  --emotion-low: #16a34a;
+  --emotion-mid: #f59e0b;
+  --emotion-high: #dc2626;
 }
 
 .dark {
@@ -146,4 +152,31 @@
 
 .shake {
   animation: shake 0.4s ease-in-out;
+}
+
+.radial-low {
+  --radial-color: #16a34a;
+}
+.radial-midlow {
+  --radial-color: #eab308;
+}
+.radial-midhigh {
+  --radial-color: #f97316;
+}
+.radial-high {
+  --radial-color: #dc2626;
+}
+
+.scrollbar-style::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scrollbar-style::-webkit-scrollbar-thumb {
+  background: rgba(191, 191, 191);
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 2px solid transparent;
+  border-right: 4px solid transparent;
+  background-clip: padding-box;
+  border-radius: 10px;
 }

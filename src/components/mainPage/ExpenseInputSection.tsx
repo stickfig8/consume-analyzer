@@ -39,7 +39,7 @@ export default function ExpenseInputSection({
         </div>
       </div>
 
-      <div ref={ref} className="flex flex-col gap-2 max-h-100 overflow-y-auto">
+      <div ref={ref} className="flex flex-col gap-2 ">
         {expenses.map((expense) => (
           <PriceInputCard
             key={expense.id}

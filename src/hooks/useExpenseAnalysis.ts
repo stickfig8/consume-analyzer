@@ -47,15 +47,15 @@ export function useExpenseAnalysis() {
         insight,
       });
       setStatus("success");
-    } catch (err) {
-      if (err instanceof HttpError) {
-        if (err.status === 503) {
-          setError("현재 분석 요청이 많습니다. 잠시 후 다시 시도해주세요.");
-        } else {
-          setError("분석 중 오류가 발생했습니다.");
-        }
+    } catch (err: any) {
+      const status = err?.status;
+
+      if (status === 503) {
+        setError("현재 분석 요청이 많습니다. 잠시 후 다시 시도해주세요.");
+      } else if (status === 429) {
+        setError("요청이 너무 많습니다. 잠시 후 다시 시도해주세요.");
       } else {
-        setError("알 수 없는 오류가 발생했습니다.");
+        setError("분석 중 오류가 발생했습니다.");
       }
 
       setStatus("error");

@@ -48,7 +48,11 @@ export default function UsageTooltip({ onTestClick }: Props) {
             <div className="border-t border-border/60" />
 
             {/* 테스트 버튼 */}
-            <CommonButton onClick={onTestClick} text="샘플 데이터 입력" />
+            <CommonButton
+              onClick={onTestClick}
+              text="샘플 데이터 입력"
+              className="w-full"
+            />
           </div>
         </TooltipContent>
       </Tooltip>

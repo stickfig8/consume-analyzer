@@ -40,26 +40,24 @@ export function calculateSummary(
 }
 
 export function calculateEmotion(summary: ExpenseSummary): EmotionScore {
-  const emotionScore = Math.min(
-    100,
-    summary.percentage.emotional + summary.percentage.routine * 0.3,
-  );
+  const emotional = summary.percentage.emotional;
 
   let level: EmotionLevel;
 
-  if (emotionScore <= 20) {
+  if (emotional <= 20) {
     level = "low";
-  } else if (emotionScore <= 40) {
+  } else if (emotional <= 35) {
     level = "mediumLow";
-  } else if (emotionScore <= 60) {
+  } else if (emotional <= 50) {
     level = "medium";
-  } else if (emotionScore <= 80) {
+  } else if (emotional <= 65) {
     level = "mediumHigh";
   } else {
     level = "high";
   }
+
   return {
-    score: Math.round(emotionScore),
+    score: Math.round(emotional),
     level,
   };
 }

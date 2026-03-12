@@ -1,73 +1,41 @@
-# React + TypeScript + Vite
+# Consume-Anaylzer 📊
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🖥️ 프로젝트 소개
 
-Currently, two official plugins are available:
+LLM 기반 분석을 통한 감정 소비 리포트 서비스입니다.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📅 개발기간
 
-## React Compiler
+26.02. ~ 26.03.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 👥 개발 인원
 
-## Expanding the ESLint configuration
+개인 프로젝트
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ⚙️ 주요 기능
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- 소비 입력 기반 분석 요청
+- 누락 입력 validation
+- 서버리스 함수를 통한 LLM 요청
+- 더미데이터 테스트 기능
+- 소비 리포트 열람
+- 소비 리포트 pdf export
+- LLM 요청 단계별 로딩 창 & 요청 중단
+- 반응형 디자인 적용
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🛠️ Tech
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/ko/)
+- [Tailwind css](https://tailwindcss.com)
+- [shadcn](https://ui.shadcn.com/)
+- [Gemini API](https://ai.google.dev/aistudio?hl=ko)
+- [Vercel Serverless](https://vercel.com/templates/other/nodejs-serverless-function-express)
+- [Vite](https://ko.vite.dev/)
+- [eslint + prettier](https://eslint.org/)
+- [Vercel](https://vercel.com/home)
+- [npm](https://www.npmjs.com/)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+이동: [Consume-Analyzer](https://consume-analyzer.vercel.app/)

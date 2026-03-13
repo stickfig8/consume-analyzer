@@ -24,7 +24,7 @@ export default function OverViewCard({
           <RadialChart
             score={emotionScore.score}
             unit="점"
-            desc="감정 소비 지수"
+            desc="감정 소비 점수"
           />
           <CompareCard summary={summary} score={emotionScore.score} />
           <MobileCompareCard summary={summary} score={emotionScore.score} />

@@ -3,12 +3,13 @@ import type { Expense, ExpenseError } from "@/types/clientTypes";
 
 export function useExpenseValidation() {
   const [errors, setErrors] = useState<Record<string, ExpenseError>>({});
-
   const [hasSubmitted, setHasSubmitted] = useState(false);
-
   const [shakeIds, setShakeIds] = useState<string[]>([]);
 
-  const [errorMessage, setErrorMessage] = useState<String | null>(null);
+  const errorMessage =
+    hasSubmitted && Object.keys(errors).length > 0
+      ? "빈 항목이 있습니다."
+      : null;
 
   function validate(expenses: Expense[]) {
     setHasSubmitted(true);
@@ -34,7 +35,6 @@ export function useExpenseValidation() {
     });
 
     setErrors(newErrors);
-    setErrorMessage("빈 항목이 있습니다.");
 
     if (hasError) {
       const ids = Object.keys(newErrors);
@@ -62,7 +62,6 @@ export function useExpenseValidation() {
 
       return copy;
     });
-    setErrorMessage(null);
   }
 
   return {

@@ -12,30 +12,23 @@ export function useExportReport() {
     setIsExporting(true);
 
     await new Promise((r) => setTimeout(r, 100));
+
     const canvas = await html2canvas(reportRef.current, {
       scale: 2,
     });
 
     const imgData = canvas.toDataURL("image/png");
 
-    const pdf = new jsPDF("p", "mm", "a4");
+    const pdfWidth = 110;
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
-    const imgWidth = 210; // A4 width mm
-    const pageHeight = 297;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: [pdfWidth, pdfHeight], // height를 동적으로
+    });
 
-    let heightLeft = imgHeight;
-    let position = 0;
-
-    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-    heightLeft -= pageHeight;
-
-    while (heightLeft > 0) {
-      position = heightLeft - imgHeight;
-      pdf.addPage();
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-    }
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
 
     pdf.save("소비 분석 리포트.pdf");
 

@@ -7,7 +7,7 @@ type Props = {
 };
 export default function CompareCard({ summary, score }: Props) {
   return (
-    <div className="w-full flex flex-col gap-5 justify-center relative">
+    <div className="w-full flex flex-col gap-5 justify-center relative max-[600px]:hidden">
       <ExpenseBarChart summary={summary} score={score} />
       <p className="text-sm text-muted-foreground max-[900px]:hidden block">{`총 소비액: ${summary.totalExpense.toLocaleString("ko-KR")}원`}</p>
     </div>

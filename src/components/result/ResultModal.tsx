@@ -40,16 +40,16 @@ export default function ResultModal({
       }}
     >
       <article
-        className={`max-w-[880px] w-full ${isExporting ? "h-auto" : "h-[85%]"} bg-white rounded-xl flex flex-col gap-7 pt-5`}
+        className={`max-w-[880px] w-full ${isExporting ? "h-auto" : "h-[85%]"} bg-white rounded-xl flex flex-col gap-7 pt-5 max-[900px]:mx-2`}
         onClick={(e) => e.stopPropagation()}
         ref={reportRef}
       >
         {/* 결과 */}
         {status === "success" && result && (
-          <div className="w-full h-full flex flex-col gap-5">
+          <div className="w-full h-full flex flex-col gap-5 max-[900px]:gap-1">
             <ResultModalTitle />
             <div
-              className={`flex flex-col gap-3 scrollbar-style p-5 ${isExporting ? "overflow-visible max-h-none" : "h-full overflow-y-auto"}`}
+              className={`flex flex-col gap-3 scrollbar-style p-5 ${isExporting ? "overflow-visible max-h-none" : "h-full overflow-y-auto"} max-[900px]:p-2`}
             >
               <OverViewCard
                 summary={result.summary}

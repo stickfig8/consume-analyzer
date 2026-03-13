@@ -3,6 +3,7 @@ import CommonAppCard from "../common/CommonAppCard";
 import RadialChart from "./overview/RadialChart";
 import CompareCard from "./overview/CompareCard";
 import ResultCardTitle from "./common/ResultCardTitle";
+import MobileCompareCard from "./overview/MobileCompareCard";
 
 type Props = {
   summary: ExpenseSummary;
@@ -26,9 +27,10 @@ export default function OverViewCard({
             desc="감정 소비 지수"
           />
           <CompareCard summary={summary} score={emotionScore.score} />
+          <MobileCompareCard summary={summary} score={emotionScore.score} />
         </div>
 
-        <p className="text-sm leading-relaxed text-foreground">
+        <p className="text-sm leading-relaxed text-foreground max-[900px]:text-[13px]">
           {summaryComment}
         </p>
       </article>

@@ -15,9 +15,9 @@ export default function CommonReportCard({
     <CommonAppCard>
       <article className="w-full h-fit flex flex-col gap-5 p-3">
         <ResultCardTitle title={title} />
-        <div className="ml-2 flex flex-col gap-3 text-sm leading-relaxed text-foreground">
+        <div className="flex flex-col gap-3 text-sm leading-relaxed text-foreground ml-2 max-[900px]:ml-0 max-[900px]:text-[13px] max-[900px]:gap-1">
           {contents.map((content, i) => (
-            <p key={i} className="relative pl-4">
+            <p key={i} className="relative pl-4 max-[900px]:pl-3">
               {isImprove ? (
                 <span className="absolute left-0 top-0 text-primary">✓</span>
               ) : (

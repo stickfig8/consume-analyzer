@@ -33,13 +33,13 @@ export default function ExpenseBarChart({ summary, score }: Props) {
   ];
 
   return (
-    <div className="w-full h-[100px]">
+    <div className="w-full h-[100px] overflow-visible">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           accessibilityLayer
           data={chartData}
           layout="vertical"
-          margin={{ right: 16 }}
+          margin={{ right: 60 }}
         >
           <YAxis
             dataKey="type"
@@ -56,14 +56,14 @@ export default function ExpenseBarChart({ summary, score }: Props) {
               dataKey="type"
               position="insideLeft"
               offset={8}
-              className="fill-(--radial-color)"
+              className="fill-(--radial-color)  whitespace-nowrap"
               fontSize={12}
             />
             <LabelList
               dataKey="value"
               position="right"
               offset={8}
-              className="fill-foreground"
+              className="fill-foreground "
               fontSize={12}
               formatter={(value: number) =>
                 value.toLocaleString("ko-KR") + "원"

@@ -6,17 +6,25 @@ import {
 } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
 import CommonButton from "../common/CommonButton";
+import { useState } from "react";
 
 type Props = {
   onTestClick: () => void;
 };
 
 export default function UsageTooltip({ onTestClick }: Props) {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <TooltipProvider delayDuration={100}>
-      <Tooltip>
+      <Tooltip open={isOpen}>
         <TooltipTrigger asChild>
-          <button className="cursor-pointer text-muted-foreground hover:text-foreground transition-colors mr-2">
+          <button
+            className="cursor-pointer text-muted-foreground hover:text-foreground transition-colors mr-2"
+            onClick={() => setIsOpen((prev) => !prev)}
+            onMouseEnter={() => setIsOpen(true)}
+            onMouseLeave={() => setIsOpen(false)}
+            onTouchStart={() => setIsOpen((prev) => !prev)}
+          >
             <Info className="w-4 h-4" />
           </button>
         </TooltipTrigger>

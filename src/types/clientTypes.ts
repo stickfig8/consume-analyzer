@@ -42,6 +42,14 @@ export type EmotionScore = {
   level: EmotionLevel;
 };
 
+export type ImproveCandidate = {
+  impact: number;
+  adjustScore: number;
+  item: string;
+  total: number;
+  category: string;
+};
+
 export type InsightPayload = {
   total: number;
   fixedPercent: number;
@@ -49,6 +57,7 @@ export type InsightPayload = {
   emotionalPercent: number;
   emotionScore: number;
   emotionLevel: string;
+  candidates: ImproveCandidate[];
 };
 
 // 최종 UI 전달 자료형

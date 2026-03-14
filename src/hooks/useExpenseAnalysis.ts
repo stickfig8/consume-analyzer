@@ -5,7 +5,11 @@ import type {
 } from "@/types/clientTypes";
 import { useEffect, useRef, useState } from "react";
 import { requestClassify } from "@/sevices/classify";
-import { calculateEmotion, calculateSummary } from "@/utils/calculate";
+import {
+  calculateEmotion,
+  calculateSummary,
+  extractCandidates,
+} from "@/utils/calculate";
 import { requestInsight } from "@/sevices/insight";
 
 export function useExpenseAnalysis() {
@@ -40,6 +44,12 @@ export function useExpenseAnalysis() {
       setStatus("calculating");
       const summary = calculateSummary(expenses, classification);
 
+      const candidates = extractCandidates(
+        expenses,
+        classification,
+        summary.totalExpense,
+      );
+
       // 3: 클라이언트 감정 점수 계산
       const emotionScore = calculateEmotion(summary);
 
@@ -53,6 +63,7 @@ export function useExpenseAnalysis() {
           emotionalPercent: summary.percentage.emotional,
           emotionScore: emotionScore.score,
           emotionLevel: emotionScore.level,
+          candidates,
         },
         controller.signal,
       );

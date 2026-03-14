@@ -14,7 +14,7 @@ export const dummyData = [
   },
   { id: crypto.randomUUID(), item: "운동화", price: 100000, memo: "" },
   { id: crypto.randomUUID(), item: "군것질", price: 20000, memo: "두쫀쿠" },
-  { id: crypto.randomUUID(), item: "청첩장 모임", price: 30000, memo: "" },
+  { id: crypto.randomUUID(), item: "통신비", price: 300000, memo: "" },
   {
     id: crypto.randomUUID(),
     item: "친구들이랑 놀러",

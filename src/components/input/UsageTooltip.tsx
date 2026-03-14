@@ -35,6 +35,7 @@ export default function UsageTooltip({ onTestClick }: Props) {
           <div className="flex flex-col gap-2 text-xs text-muted-foreground leading-relaxed">
             <p>• 품목과 가격은 반드시 입력해야 합니다.</p>
             <p>• 메모는 선택 입력입니다.</p>
+            <p>• 메모를 상세히 기입할 수록 분류가 정확해집니다.</p>
             <p>• 분석 결과는 감정 소비 지수와 패턴을 제공합니다.</p>
           </div>
 

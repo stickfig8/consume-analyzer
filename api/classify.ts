@@ -12,7 +12,7 @@ export default async function handler(req: any, res: any) {
     const expenses = req.body;
 
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash-lite",
+      model: "gemini-3.1-flash-lite-preview",
     });
 
     const result = await model.generateContent({

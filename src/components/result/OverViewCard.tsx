@@ -5,6 +5,7 @@ import CompareCard from "./overview/CompareCard";
 import ResultCardTitle from "./common/ResultCardTitle";
 import MobileCompareCard from "./overview/MobileCompareCard";
 import CommonMotionDiv from "./common/CommonMotionDiv";
+import { parseMarkedText } from "@/utils/stringParseUtils";
 
 type Props = {
   summary: ExpenseSummary;
@@ -33,7 +34,7 @@ export default function OverViewCard({
           </div>
 
           <p className="text-sm leading-relaxed text-foreground max-[900px]:text-[13px]">
-            {summaryComment}
+            {parseMarkedText(summaryComment)}
           </p>
         </article>
       </CommonAppCard>

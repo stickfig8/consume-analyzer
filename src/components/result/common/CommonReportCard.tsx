@@ -1,6 +1,7 @@
 import CommonAppCard from "@/components/common/CommonAppCard";
 import ResultCardTitle from "./ResultCardTitle";
 import CommonMotionDiv from "./CommonMotionDiv";
+import { parseMarkedText } from "@/utils/stringParseUtils";
 
 type Props = {
   title: string;
@@ -27,7 +28,7 @@ export default function CommonReportCard({
                   <span className="absolute left-0 top-[8px] w-1.5 h-1.5 rounded-full bg-foreground/40" />
                 )}
 
-                {content}
+                {parseMarkedText(content)}
               </p>
             ))}
           </div>

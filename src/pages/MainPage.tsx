@@ -23,7 +23,7 @@ export default function MainPage() {
     if (!isVaild) return;
 
     setIsModalOpen(true);
-    analysis.analyze(expenseInput.expenses);
+    analysis.analyze(expenseInput.expenses, expenseInput.period);
   }
 
   return (
@@ -35,6 +35,8 @@ export default function MainPage() {
         addCard={expenseInput.addCard}
         onAnalyze={handleAnalyze}
         fillWithDummyData={expenseInput.fillWithDummyData}
+        period={expenseInput.period}
+        onPeriodClicked={expenseInput.setPeriod}
       />
       <ExpenseInputSection
         {...expenseInput}

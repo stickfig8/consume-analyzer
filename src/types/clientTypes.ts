@@ -12,8 +12,6 @@ export type ExpenseError = {
   price?: boolean;
 };
 
-export type period = "daily" | "weekly" | "monthly";
-
 export type ExpenseSummary = {
   totalExpense: number;
 
@@ -58,6 +56,7 @@ export type InsightPayload = {
   emotionScore: number;
   emotionLevel: string;
   candidates: ImproveCandidate[];
+  period: Period;
 };
 
 // 최종 UI 전달 자료형
@@ -65,6 +64,7 @@ export type AnalysisResult = {
   summary: ExpenseSummary;
   emotionScore: EmotionScore;
   insight: LLMInsight;
+  period: Period;
 };
 
 // 분석 현황 타입
@@ -78,3 +78,5 @@ export type AnalysisStatus =
 
 // 로딩 현황 타입
 export type LoadingStatus = "classifying" | "calculating" | "insighting";
+
+export type Period = "month" | "week" | "day";

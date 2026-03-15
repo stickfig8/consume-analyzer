@@ -30,7 +30,7 @@ export default function ResultModal({
   if (!isOpen) return null;
 
   const { reportRef, handleDownloadPDF, isExporting } = useExportReport();
-  //useBlockOuterScroll(isOpen);
+  // useBlockOuterScroll();
 
   return (
     <ModalBackground
@@ -47,7 +47,7 @@ export default function ResultModal({
         {/* 결과 */}
         {status === "success" && result && (
           <div className="w-full h-full flex flex-col gap-5 max-[900px]:gap-1">
-            <ResultModalTitle />
+            <ResultModalTitle period={result.period} />
             <div
               className={`flex flex-col gap-3 scrollbar-style p-5 ${isExporting ? "overflow-visible max-h-none" : "h-full overflow-y-auto"} max-[900px]:p-2`}
             >

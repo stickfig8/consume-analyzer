@@ -1,11 +1,13 @@
 import { dummyData } from "@/configs/dummyData";
-import type { Expense } from "@/types/clientTypes";
+import type { Period, Expense } from "@/types/clientTypes";
 import { useState } from "react";
 
 export function useExpenseInput() {
   const [expenses, setExpenses] = useState<Expense[]>(
     Array.from({ length: 5 }, () => createEmptyExpense()),
   );
+
+  const [period, setPeriod] = useState<Period>("month");
 
   function createEmptyExpense(): Expense {
     return {
@@ -48,5 +50,8 @@ export function useExpenseInput() {
     updateExpense,
     removeExpense,
     fillWithDummyData,
+
+    period,
+    setPeriod,
   };
 }

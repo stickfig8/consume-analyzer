@@ -3,6 +3,7 @@ import parse, {
   type HTMLReactParserOptions,
 } from "html-react-parser";
 import { getPercentColor } from "./calculate";
+import type { Period } from "@/types/clientTypes";
 
 export function parseMarkedText(text: string) {
   const options: HTMLReactParserOptions = {
@@ -45,4 +46,10 @@ export function parseMarkedText(text: string) {
   };
 
   return parse(text, options);
+}
+
+export function parsePeriod(period: Period) {
+  if (period === "month") return "월간 소비";
+  else if (period === "week") return "주간 소비";
+  else return "일간 소비";
 }

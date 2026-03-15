@@ -2,6 +2,7 @@ import type {
   AnalysisResult,
   AnalysisStatus,
   Expense,
+  Period,
 } from "@/types/clientTypes";
 import { useEffect, useRef, useState } from "react";
 import { requestClassify } from "@/sevices/classify";
@@ -19,7 +20,7 @@ export function useExpenseAnalysis() {
 
   const abortRef = useRef<AbortController | null>(null);
 
-  async function analyze(expenses: Expense[]) {
+  async function analyze(expenses: Expense[], period: Period) {
     if (
       status === "classifying" ||
       status === "calculating" ||
@@ -64,6 +65,7 @@ export function useExpenseAnalysis() {
           emotionScore: emotionScore.score,
           emotionLevel: emotionScore.level,
           candidates,
+          period,
         },
         controller.signal,
       );
@@ -73,6 +75,7 @@ export function useExpenseAnalysis() {
         summary,
         emotionScore,
         insight,
+        period,
       });
       setStatus("success");
     } catch (err: any) {

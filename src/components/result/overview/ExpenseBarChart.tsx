@@ -12,8 +12,13 @@ import {
 type Props = {
   summary: ExpenseSummary;
   score: number;
+  isExporting: boolean;
 };
-export default function ExpenseBarChart({ summary, score }: Props) {
+export default function ExpenseBarChart({
+  summary,
+  score,
+  isExporting,
+}: Props) {
   const chartData = [
     {
       type: "고정 소비",
@@ -51,7 +56,12 @@ export default function ExpenseBarChart({ summary, score }: Props) {
             hide
           />
           <XAxis dataKey="value" type="number" hide />
-          <Bar dataKey="value" layout="vertical" radius={4}>
+          <Bar
+            dataKey="value"
+            layout="vertical"
+            radius={4}
+            isAnimationActive={!isExporting}
+          >
             <LabelList
               dataKey="type"
               position="insideLeft"

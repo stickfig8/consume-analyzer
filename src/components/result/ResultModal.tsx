@@ -55,6 +55,7 @@ export default function ResultModal({
                 summary={result.summary}
                 emotionScore={result.emotionScore}
                 summaryComment={result.insight.summaryComment}
+                isExporting={isExporting}
               />
               <CommonReportCard
                 title="📋 상세 분석"

@@ -11,12 +11,14 @@ type Props = {
   summary: ExpenseSummary;
   emotionScore: EmotionScore;
   summaryComment: string;
+  isExporting: boolean;
 };
 
 export default function OverViewCard({
   summary,
   emotionScore,
   summaryComment,
+  isExporting,
 }: Props) {
   return (
     <CommonMotionDiv delay={1.0}>
@@ -28,8 +30,13 @@ export default function OverViewCard({
               score={emotionScore.score}
               unit="점"
               desc="감정 소비 점수"
+              isExporting={isExporting}
             />
-            <CompareCard summary={summary} score={emotionScore.score} />
+            <CompareCard
+              summary={summary}
+              score={emotionScore.score}
+              isExporting={isExporting}
+            />
             <MobileCompareCard summary={summary} score={emotionScore.score} />
           </div>
 

@@ -12,9 +12,10 @@ type Props = {
   score: number;
   unit: string;
   desc: string;
+  isExporting: boolean;
 };
 
-export default function RadialChart({ score, unit, desc }: Props) {
+export default function RadialChart({ score, unit, desc, isExporting }: Props) {
   const chartData = [
     {
       name: "emotion",
@@ -41,7 +42,12 @@ export default function RadialChart({ score, unit, desc }: Props) {
               polarRadius={[86, 74]}
             />
 
-            <RadialBar dataKey="value" cornerRadius={50} background />
+            <RadialBar
+              dataKey="value"
+              cornerRadius={50}
+              background
+              isAnimationActive={!isExporting}
+            />
 
             <PolarRadiusAxis tick={false} axisLine={false}>
               <Label

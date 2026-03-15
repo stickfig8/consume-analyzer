@@ -6,11 +6,13 @@ import { parseMarkedText } from "@/utils/stringParseUtils";
 type Props = {
   title: string;
   contents: string[];
+  selectedCandidates: string[];
   isImprove?: boolean;
 };
 export default function CommonReportCard({
   title,
   contents,
+  selectedCandidates,
   isImprove = false,
 }: Props) {
   const delay = isImprove ? 4.0 : 2.5;
@@ -28,7 +30,7 @@ export default function CommonReportCard({
                   <span className="absolute left-0 top-[8px] w-1.5 h-1.5 rounded-full bg-foreground/40" />
                 )}
 
-                {parseMarkedText(content)}
+                {parseMarkedText(content, selectedCandidates)}
               </p>
             ))}
           </div>

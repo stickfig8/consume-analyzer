@@ -60,10 +60,12 @@ export default function ResultModal({
               <CommonReportCard
                 title="📋 상세 분석"
                 contents={result.insight.patternAnalysis}
+                selectedCandidates={result.insight.selectedCandidates}
               />
               <CommonReportCard
                 title="🚀 개선"
                 contents={result.insight.improvementSuggestions}
+                selectedCandidates={result.insight.selectedCandidates}
                 isImprove={true}
               />
 

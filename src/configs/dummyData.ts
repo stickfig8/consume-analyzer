@@ -1,5 +1,5 @@
 export const dummyData = [
-  { id: crypto.randomUUID(), item: "쿠팡", price: 600000, memo: "식료품" },
+  { id: crypto.randomUUID(), item: "쿠팡", price: 150000, memo: "식료품" },
   {
     id: crypto.randomUUID(),
     item: "월세",

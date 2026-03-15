@@ -1,55 +1,148 @@
-import parse, {
-  domToReact,
-  type HTMLReactParserOptions,
-} from "html-react-parser";
 import { getPercentColor } from "./calculate";
-import type { Period } from "@/types/clientTypes";
+import React from "react";
 
-export function parseMarkedText(text: string) {
-  const options: HTMLReactParserOptions = {
-    replace: (domNode: any) => {
-      if (domNode.type !== "tag") return;
+type HighlightToken =
+  | { type: "text"; value: string }
+  | { type: "money"; value: string }
+  | { type: "percent"; value: string }
+  | { type: "score"; value: string }
+  | { type: "category"; value: string }
+  | { type: "candidate"; value: string };
 
-      const content = domToReact(domNode.children);
+const CATEGORY_REGEX =
+  /(고정 소비|고정 지출|일상 소비|일상 지출|감정 소비|감정 지출)/;
 
-      switch (domNode.name) {
-        case "cat":
-          return <span className="text-blue-500 font-semibold">{content}</span>;
+const MONEY_REGEX = /\d{1,3}(?:,\d{3})*원/;
+const PERCENT_REGEX = /\d+(?:\.\d+)?%/;
+const SCORE_REGEX = /\d+(?:\.\d+)?점/;
 
-        case "money":
-          return <span className="text-slate-700 font-bold">{content}</span>;
+export function parseMarkedText(
+  text: string,
+  candidates: string[] = [],
+): React.ReactNode[] {
+  if (!text) return [];
 
-        case "percent": {
-          const rawText = domNode.children?.[0]?.data ?? "";
-          const colorClass = getPercentColor(rawText);
+  // candidates 긴 문자열 우선 정렬
+  const sortedCandidates = [...candidates].sort((a, b) => b.length - a.length);
 
-          return (
-            <span
-              className={`${colorClass} font-semibold underline underline-offset-2`}
-            >
-              {content}
-            </span>
-          );
-        }
+  // 하나의 통합 정규식 생성
+  const candidatePattern = sortedCandidates.length
+    ? sortedCandidates.map((c) => escapeRegex(c)).join("|")
+    : null;
 
-        case "adjust":
-          return (
-            <span className="text-white bg-[var(--fixed-color)] rounded-[2px] mx-[2px] px-[3px]">
-              {content}
-            </span>
-          );
+  const combinedRegex = new RegExp(
+    [
+      candidatePattern,
+      CATEGORY_REGEX.source,
+      MONEY_REGEX.source,
+      PERCENT_REGEX.source,
+      SCORE_REGEX.source,
+    ]
+      .filter(Boolean)
+      .join("|"),
+    "g",
+  );
 
-        default:
-          return undefined; // unknown tag 무시 xss 방지
+  const tokens: HighlightToken[] = [];
+  let lastIndex = 0;
+
+  for (const match of text.matchAll(combinedRegex)) {
+    const matchText = match[0];
+    const index = match.index ?? 0;
+
+    // 앞 일반 텍스트
+    if (index > lastIndex) {
+      tokens.push({
+        type: "text",
+        value: text.slice(lastIndex, index),
+      });
+    }
+
+    // 타입 판별
+    if (sortedCandidates.includes(matchText)) {
+      tokens.push({ type: "candidate", value: matchText });
+    } else if (CATEGORY_REGEX.test(matchText)) {
+      tokens.push({ type: "category", value: matchText });
+    } else if (MONEY_REGEX.test(matchText)) {
+      tokens.push({ type: "money", value: matchText });
+    } else if (PERCENT_REGEX.test(matchText)) {
+      tokens.push({ type: "percent", value: matchText });
+    } else if (SCORE_REGEX.test(matchText)) {
+      tokens.push({ type: "score", value: matchText });
+    } else {
+      tokens.push({ type: "text", value: matchText });
+    }
+
+    lastIndex = index + matchText.length;
+  }
+
+  // 마지막 남은 텍스트
+  if (lastIndex < text.length) {
+    tokens.push({
+      type: "text",
+      value: text.slice(lastIndex),
+    });
+  }
+
+  // ReactNode로 변환
+  return tokens.map((token, index) => {
+    switch (token.type) {
+      case "money":
+        return (
+          <span key={index} className="text-slate-800 font-bold">
+            {token.value}
+          </span>
+        );
+
+      case "percent": {
+        const color = getPercentColor(token.value);
+        return (
+          <span
+            key={index}
+            className={`${color} font-semibold underline underline-offset-2`}
+          >
+            {token.value}
+          </span>
+        );
       }
-    },
-  };
 
-  return parse(text, options);
+      case "score": {
+        const numeric = token.value.replace("점", "") + "%";
+        const color = getPercentColor(numeric);
+        return (
+          <span
+            key={index}
+            className={`${color} font-semibold underline underline-offset-2`}
+          >
+            {token.value}
+          </span>
+        );
+      }
+
+      case "category":
+        return (
+          <span key={index} className="text-blue-500 font-semibold">
+            {token.value}
+          </span>
+        );
+
+      case "candidate":
+        return (
+          <span
+            key={index}
+            className="bg-primary text-white px-1 mx-[2px] rounded font-medium"
+          >
+            {token.value}
+          </span>
+        );
+
+      default:
+        return <React.Fragment key={index}>{token.value}</React.Fragment>;
+    }
+  });
 }
 
-export function parsePeriod(period: Period) {
-  if (period === "month") return "월간 소비";
-  else if (period === "week") return "주간 소비";
-  else return "일간 소비";
+//정규식 특수문자 이스케이프
+function escapeRegex(str: string) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }

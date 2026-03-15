@@ -15,4 +15,7 @@ export type LLMInsight = {
 
   // 개선 제안 리스트
   improvementSuggestions: string[];
+
+  // 개선 항목 리스트
+  selectedCandidates: string[];
 };

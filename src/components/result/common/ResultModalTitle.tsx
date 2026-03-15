@@ -1,6 +1,5 @@
 import type { Period } from "@/types/clientTypes";
-import { parsePeriod } from "@/utils/stringParseUtils";
-import { getToday } from "@/utils/utils";
+import { getToday, parsePeriod } from "@/utils/utils";
 
 type Props = {
   period: Period;

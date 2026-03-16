@@ -4,31 +4,17 @@ import InputUtilitySection from "@/components/input/InputUtilitySection";
 import ExpenseInputSection from "@/components/input/ExpenseInputSection";
 import ResultModal from "@/components/result/ResultModal";
 
-import { useExpenseAnalysis } from "@/hooks/useExpenseAnalysis";
-import { useExpenseInput } from "@/hooks/useExpenseInput";
-import { useExpenseValidation } from "@/hooks/useExpenseValidation";
-import { useBlockOuterScroll } from "@/hooks/useBlockOuterScroll";
-import { useState } from "react";
+import { useMainService } from "@/hooks/useMainService";
 
 export default function MainPage() {
-  const expenseInput = useExpenseInput();
-
-  const validation = useExpenseValidation();
-
-  const analysis = useExpenseAnalysis();
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  function handleAnalyze() {
-    const isVaild = validation.validate(expenseInput.expenses);
-
-    if (!isVaild) return;
-
-    setIsModalOpen(true);
-    analysis.analyze(expenseInput.expenses, expenseInput.period);
-  }
-
-  useBlockOuterScroll(isModalOpen);
+  const {
+    expenseInput,
+    validation,
+    analysis,
+    isModalOpen,
+    setIsModalOpen,
+    handleAnalyze,
+  } = useMainService();
 
   return (
     <MainContainer>

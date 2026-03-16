@@ -4,13 +4,12 @@ import ModalBackground from "../common/ModalBackground";
 import CommonReportCard from "./common/CommonReportCard";
 import OverViewCard from "./overview/OverViewCard";
 
-import { useExportReport } from "@/hooks/useExportReport";
 import ResultModalTitle from "./common/ResultModalTitle";
 import ModalButtons from "./common/ModalButtons";
 import ErrorPresentation from "./request/ErrorPresentation";
 import LoadingIndicator from "./request/LoadingIndicator";
 
-import { useBlockOuterScroll } from "@/hooks/useBlockOuterScroll";
+import { useExportReport } from "@/hooks/useExportReport";
 
 type Props = {
   status: AnalysisStatus;

@@ -1,17 +1,18 @@
 import type { AnalysisResult, AnalysisStatus } from "@/types/clientTypes";
 import ModalBackground from "../common/ModalBackground";
-import OverViewCard from "./OverViewCard";
+
 import CommonReportCard from "./common/CommonReportCard";
+import OverViewCard from "./overview/OverViewCard";
 
 import { useExportReport } from "@/hooks/useExportReport";
 import ResultModalTitle from "./common/ResultModalTitle";
 import ModalButtons from "./common/ModalButtons";
 import ErrorPresentation from "./request/ErrorPresentation";
 import LoadingIndicator from "./request/LoadingIndicator";
-//import { useBlockOuterScroll } from "@/hooks/useBlockOuterScroll";
+
+import { useBlockOuterScroll } from "@/hooks/useBlockOuterScroll";
 
 type Props = {
-  isOpen: boolean;
   status: AnalysisStatus;
   result: AnalysisResult | null;
   error: string | null;
@@ -20,17 +21,13 @@ type Props = {
 };
 
 export default function ResultModal({
-  isOpen,
   status,
   result,
   error,
   onClose,
   cancel,
 }: Props) {
-  if (!isOpen) return null;
-
   const { reportRef, handleDownloadPDF, isExporting } = useExportReport();
-  // useBlockOuterScroll();
 
   return (
     <ModalBackground

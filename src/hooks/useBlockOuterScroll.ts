@@ -1,26 +1,15 @@
 import { useEffect } from "react";
 
-export function useBlockOuterScroll() {
-  const preventScroll = () => {
-    const currentScrollY = window.scrollY;
-    document.body.style.position = "fixed";
-    document.body.style.width = "100%";
-    document.body.style.top = `-${currentScrollY}px`; // 현재 스크롤 위치
-    document.body.style.overflowY = "scroll";
-    return currentScrollY;
-  };
-
-  const allowScroll = (prevScrollY: number) => {
-    document.body.style.position = "";
-    document.body.style.width = "";
-    document.body.style.top = "";
-    document.body.style.overflowY = "";
-    window.scrollTo(0, prevScrollY);
-  };
+export function useBlockOuterScroll(isOpen: boolean) {
   useEffect(() => {
-    const prevScrollY = preventScroll();
+    if (isOpen) {
+      document.body.classList.add("modal-open");
+    } else {
+      document.body.classList.remove("modal-open");
+    }
+
     return () => {
-      allowScroll(prevScrollY);
+      document.body.classList.remove("modal-open");
     };
-  }, []);
+  }, [isOpen]);
 }

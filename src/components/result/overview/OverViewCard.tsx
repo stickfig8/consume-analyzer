@@ -1,10 +1,12 @@
 import type { EmotionScore, ExpenseSummary } from "@/types/clientTypes";
-import CommonAppCard from "../common/CommonAppCard";
-import RadialChart from "./overview/RadialChart";
-import CompareCard from "./overview/CompareCard";
-import ResultCardTitle from "./common/ResultCardTitle";
-import MobileCompareCard from "./overview/MobileCompareCard";
-import CommonMotionDiv from "./common/CommonMotionDiv";
+
+import CommonMotionDiv from "../common/CommonMotionDiv";
+import CommonAppCard from "@/components/common/CommonAppCard";
+import ResultCardTitle from "../common/ResultCardTitle";
+import RadialChart from "./RadialChart";
+import CompareCard from "./CompareCard";
+import MobileCompareCard from "./MobileCompareCard";
+
 import { parseMarkedText } from "@/utils/stringParseUtils";
 
 type Props = {

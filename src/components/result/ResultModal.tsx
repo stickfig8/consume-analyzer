@@ -75,7 +75,9 @@ export default function ResultModal({
                 cardType="risk"
                 delay={5.5}
               />
-
+              <p className="text-xs text-muted-foreground">
+                본 리포트는 생성형 AI 모델을 활용하여 자동 생성되었습니다.
+              </p>
               {/* 버튼 목록 */}
               <ModalButtons
                 isExporting={isExporting}

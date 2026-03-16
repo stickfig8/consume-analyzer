@@ -1,13 +1,13 @@
 import type { Period } from "@/types/clientTypes";
 
-export function getToday() {
+export function getToday(devide: string = "-") {
   const today = new Date();
 
   const year = today.getFullYear();
   const month = ("0" + (today.getMonth() + 1)).slice(-2);
   const day = ("0" + today.getDate()).slice(-2);
 
-  return `${year}-${month}-${day}`;
+  return year + devide + month + devide + day;
 }
 
 export function parsePeriod(period: Period) {

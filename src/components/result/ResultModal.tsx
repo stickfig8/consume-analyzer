@@ -82,7 +82,7 @@ export default function ResultModal({
               <ModalButtons
                 isExporting={isExporting}
                 onClose={onClose}
-                onSave={handleDownloadPDF}
+                onSave={() => handleDownloadPDF(result.period)}
               />
             </div>
           </div>

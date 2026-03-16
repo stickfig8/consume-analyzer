@@ -1,3 +1,5 @@
+import type { Period } from "@/types/clientTypes";
+import { getToday, parsePeriod } from "@/utils/utils";
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 import { useRef, useState } from "react";
@@ -6,7 +8,7 @@ export function useExportReport() {
   const reportRef = useRef<HTMLDivElement>(null);
   const [isExporting, setIsExporting] = useState(false);
 
-  async function handleDownloadPDF() {
+  async function handleDownloadPDF(period: Period) {
     if (!reportRef.current || isExporting) return;
 
     setIsExporting(true);
@@ -30,7 +32,9 @@ export function useExportReport() {
 
     pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
 
-    pdf.save("소비 분석 리포트.pdf");
+    pdf.save(
+      `소비 구조 분석 리포트_${parsePeriod(period)}_${getToday("")}.pdf`,
+    );
 
     setIsExporting(false);
   }

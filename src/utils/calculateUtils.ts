@@ -5,6 +5,8 @@ import type {
   Expense,
   ExpenseSummary,
   ImproveCandidate,
+  RiskLevel,
+  StructureType,
 } from "@/types/clientTypes";
 import type { LLMClassification } from "@/types/responseTypes";
 
@@ -49,17 +51,20 @@ export function getEmotionLevelByScore(score: number): EmotionLevel {
   else return "high";
 }
 
+// 감정 점수 계산
 export function calculateEmotion(summary: ExpenseSummary): EmotionScore {
   const emotional = summary.percentage.emotional;
 
-  let baseScore = emotional * 2; // 기본 2배
+  const normalized = Math.min(emotional / 50, 1);
+
+  let baseScore = Math.pow(normalized, 2) * 100;
 
   if (emotional > summary.percentage.routine) {
-    baseScore += 10;
+    baseScore *= 1.1;
   }
 
   if (emotional > summary.percentage.fixed) {
-    baseScore += 15;
+    baseScore *= 1.15;
   }
 
   const score = Math.min(100, Math.round(baseScore));
@@ -118,4 +123,35 @@ export function extractCandidates(
 
   // 상위 4개 추출
   return candidates.sort((a, b) => b.adjustScore - a.adjustScore).slice(0, 4);
+}
+
+// 소비구조 리턴 함수
+export function calculateStructureType(summary: ExpenseSummary): StructureType {
+  const { fixed, routine, emotional } = summary.percentage;
+
+  if (emotional >= 45) {
+    return "감정 우세형";
+  }
+
+  if (fixed >= 65) {
+    return "구조 안정형";
+  }
+
+  if (routine >= 45) {
+    return "루틴 주도형";
+  }
+
+  if (emotional <= 15) {
+    return "관리 안정형";
+  }
+
+  return "균형형";
+}
+
+// 리스크 계산 함수
+export function calculateRiskLevel(score: number): RiskLevel {
+  if (score < 30) return "안정 단계";
+  if (score < 60) return "주의 단계";
+  if (score < 80) return "경계 단계";
+  return "위험 단계";
 }

@@ -8,6 +8,8 @@ import { useEffect, useRef, useState } from "react";
 import { requestClassify } from "@/sevices/classify";
 import {
   calculateEmotion,
+  calculateRiskLevel,
+  calculateStructureType,
   calculateSummary,
   extractCandidates,
 } from "@/utils/calculateUtils";
@@ -51,8 +53,12 @@ export function useExpenseAnalysis() {
         summary.totalExpense,
       );
 
-      // 3: 클라이언트 감정 점수 계산
+      // 3: 클라이언트 감정 점수, 소비구조, 리스크 단계 계산
       const emotionScore = calculateEmotion(summary);
+
+      const structureType = calculateStructureType(summary);
+
+      const riskLevel = calculateRiskLevel(emotionScore.score);
 
       // 4: LLM 해석
       setStatus("insighting");
@@ -66,6 +72,8 @@ export function useExpenseAnalysis() {
           emotionLevel: emotionScore.level,
           candidates,
           period,
+          structureType,
+          riskLevel,
         },
         controller.signal,
       );

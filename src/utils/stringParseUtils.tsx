@@ -7,14 +7,18 @@ type HighlightToken =
   | { type: "percent"; value: string }
   | { type: "score"; value: string }
   | { type: "category"; value: string }
-  | { type: "candidate"; value: string };
+  | { type: "candidate"; value: string }
+  | { type: "structure"; value: string }
+  | { type: "risk"; value: string };
 
 const CATEGORY_REGEX =
   /(고정 소비|고정 지출|일상 소비|일상 지출|감정 소비|감정 지출)/;
-
 const MONEY_REGEX = /\d{1,3}(?:,\d{3})*원/;
 const PERCENT_REGEX = /\d+(?:\.\d+)?%/;
 const SCORE_REGEX = /\d+(?:\.\d+)?점/;
+const STRUCTURE_REGEX =
+  /(감정 우세형|구조 안정형|루틴 주도형|관리 안정형|균형형)/;
+const RISK_REGEX = /(안정 단계|주의 단계|경계 단계|위험 단계)/;
 
 export function parseMarkedText(
   text: string,
@@ -37,6 +41,8 @@ export function parseMarkedText(
       MONEY_REGEX.source,
       PERCENT_REGEX.source,
       SCORE_REGEX.source,
+      STRUCTURE_REGEX.source,
+      RISK_REGEX.source,
     ]
       .filter(Boolean)
       .join("|"),
@@ -69,6 +75,10 @@ export function parseMarkedText(
       tokens.push({ type: "percent", value: matchText });
     } else if (SCORE_REGEX.test(matchText)) {
       tokens.push({ type: "score", value: matchText });
+    } else if (STRUCTURE_REGEX.test(matchText)) {
+      tokens.push({ type: "structure", value: matchText });
+    } else if (RISK_REGEX.test(matchText)) {
+      tokens.push({ type: "risk", value: matchText });
     } else {
       tokens.push({ type: "text", value: matchText });
     }
@@ -119,7 +129,7 @@ export function parseMarkedText(
 
       case "category":
         return (
-          <span key={index} className="text-blue-500 font-semibold">
+          <span key={index} className="text-primary font-semibold">
             {token.value}
           </span>
         );
@@ -128,12 +138,30 @@ export function parseMarkedText(
         return (
           <span
             key={index}
-            className="bg-primary text-white px-1 mx-[2px] rounded font-medium"
+            className="bg-blue-500 text-white px-[3px] mx-[2px] rounded-[2px] font-medium"
           >
             {token.value}
           </span>
         );
+      case "structure":
+        return (
+          <span
+            key={index}
+            className="text-slate-900 font-semibold tracking-wide"
+          >
+            [{token.value}]
+          </span>
+        );
 
+      case "risk":
+        return (
+          <span
+            key={index}
+            className="text-slate-900 font-semibold tracking-wide"
+          >
+            "{token.value}"
+          </span>
+        );
       default:
         return <React.Fragment key={index}>{token.value}</React.Fragment>;
     }

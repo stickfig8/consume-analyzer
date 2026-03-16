@@ -58,15 +58,26 @@ export default function ResultModal({
                 isExporting={isExporting}
               />
               <CommonReportCard
-                title="📋  상세 분석"
+                title="📋  구조 분석"
                 contents={result.insight.patternAnalysis}
                 selectedCandidates={result.insight.selectedCandidates}
+                cardType="pattern"
+                delay={2.5}
               />
               <CommonReportCard
                 title="🚀  개선"
                 contents={result.insight.improvementSuggestions}
                 selectedCandidates={result.insight.selectedCandidates}
-                isImprove={true}
+                cardType="improve"
+                delay={4.0}
+              />
+
+              <CommonReportCard
+                title="📈  리스크 관리"
+                contents={result.insight.expectedRisks}
+                selectedCandidates={result.insight.selectedCandidates}
+                cardType="risk"
+                delay={5.5}
               />
 
               {/* 버튼 목록 */}

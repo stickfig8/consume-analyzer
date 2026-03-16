@@ -18,4 +18,7 @@ export type LLMInsight = {
 
   // 개선 항목 리스트
   selectedCandidates: string[];
+
+  // 리스크 전망
+  expectedRisks: string[];
 };

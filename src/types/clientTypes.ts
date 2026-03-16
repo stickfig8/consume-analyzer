@@ -57,6 +57,8 @@ export type InsightPayload = {
   emotionLevel: string;
   candidates: ImproveCandidate[];
   period: Period;
+  structureType: StructureType;
+  riskLevel: RiskLevel;
 };
 
 // 최종 UI 전달 자료형
@@ -81,3 +83,17 @@ export type LoadingStatus = "classifying" | "calculating" | "insighting";
 
 // 기간 타입
 export type Period = "month" | "week" | "day";
+
+// 소비 구조 타입
+export type StructureType =
+  | "감정 우세형"
+  | "구조 안정형"
+  | "루틴 주도형"
+  | "관리 안정형"
+  | "균형형";
+
+// 리스크 단계 타입
+export type RiskLevel = "안정 단계" | "주의 단계" | "경계 단계" | "위험 단계";
+
+// 리포트 카드 종류 타입
+export type ReportCardType = "pattern" | "improve" | "risk";

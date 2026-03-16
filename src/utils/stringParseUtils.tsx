@@ -1,4 +1,4 @@
-import { getPercentColor } from "./calculate";
+import { getEmotionLevelByScore } from "./calculateUtils";
 import React from "react";
 
 type HighlightToken =
@@ -97,22 +97,20 @@ export function parseMarkedText(
       case "percent": {
         const color = getPercentColor(token.value);
         return (
-          <span
-            key={index}
-            className={`${color} font-semibold underline underline-offset-2`}
-          >
+          <span key={index} className={`${color} font-semibold`}>
             {token.value}
           </span>
         );
       }
 
       case "score": {
-        const numeric = token.value.replace("점", "") + "%";
-        const color = getPercentColor(numeric);
+        const numeric = Number(token.value.replace("점", ""));
+
         return (
           <span
             key={index}
-            className={`${color} font-semibold underline underline-offset-2`}
+            style={{ color: `var(--${getEmotionLevelByScore(numeric)})` }}
+            className={`font-semibold underline underline-offset-2`}
           >
             {token.value}
           </span>
@@ -145,4 +143,15 @@ export function parseMarkedText(
 //정규식 특수문자 이스케이프
 function escapeRegex(str: string) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function getPercentColor(percentText: string) {
+  const numeric = Number(percentText.replace("%", ""));
+
+  if (isNaN(numeric)) return "text-purple-500";
+
+  if (numeric < 20) return "text-emerald-500"; // 초록
+  if (numeric < 40) return "text-yellow-500"; // 노랑
+  if (numeric < 60) return "text-orange-500"; // 주황
+  return "text-red-500"; // 빨강
 }

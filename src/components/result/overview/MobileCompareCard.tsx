@@ -1,12 +1,11 @@
-import { getEmotionColor } from "@/utils/chartUtils";
-import type { ExpenseSummary } from "@/types/clientTypes";
+import type { EmotionLevel, ExpenseSummary } from "@/types/clientTypes";
 
 type Props = {
   summary: ExpenseSummary;
-  score: number;
+  emotionLevel: EmotionLevel;
 };
 
-export default function MobileCompareCompact({ summary, score }: Props) {
+export default function MobileCompareCompact({ summary, emotionLevel }: Props) {
   const data = [
     {
       type: "고정 소비",
@@ -24,7 +23,7 @@ export default function MobileCompareCompact({ summary, score }: Props) {
       type: "감정 소비",
       price: summary.prices.emotional,
       percent: summary.percentage.emotional,
-      color: getEmotionColor(score),
+      color: `var(--${emotionLevel})`,
       highlight: true,
     },
   ];

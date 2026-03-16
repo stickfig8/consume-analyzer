@@ -10,7 +10,7 @@ import {
   calculateEmotion,
   calculateSummary,
   extractCandidates,
-} from "@/utils/calculate";
+} from "@/utils/calculateUtils";
 import { requestInsight } from "@/sevices/insight";
 
 export function useExpenseAnalysis() {

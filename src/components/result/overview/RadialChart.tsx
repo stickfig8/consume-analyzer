@@ -1,4 +1,4 @@
-import { getEmotionClass } from "@/utils/chartUtils";
+import type { EmotionScore } from "@/types/clientTypes";
 import {
   RadialBarChart,
   RadialBar,
@@ -9,28 +9,33 @@ import {
 } from "recharts";
 
 type Props = {
-  score: number;
+  emotionScore: EmotionScore;
   unit: string;
   desc: string;
   isExporting: boolean;
 };
 
-export default function RadialChart({ score, unit, desc, isExporting }: Props) {
+export default function RadialChart({
+  emotionScore,
+  unit,
+  desc,
+  isExporting,
+}: Props) {
   const chartData = [
     {
       name: "emotion",
-      value: score,
-      fill: "var(--radial-color)",
+      value: emotionScore.score,
+      fill: `var(--${emotionScore.level})`,
     },
   ];
   return (
-    <div className={`${getEmotionClass(score)} h-full`}>
+    <div className={`h-full emotion-${emotionScore.level}`}>
       <div className="h-full aspect-square">
         <ResponsiveContainer width="100%" height="100%">
           <RadialBarChart
             data={chartData}
             startAngle={90}
-            endAngle={90 - (score / 100) * 360}
+            endAngle={90 - (emotionScore.score / 100) * 360}
             innerRadius={80}
             outerRadius={110}
           >
@@ -61,8 +66,11 @@ export default function RadialChart({ score, unit, desc, isExporting }: Props) {
                       textAnchor="middle"
                       dominantBaseline="middle"
                     >
-                      <tspan className="text-3xl font-bold mb-5">
-                        {score + unit}
+                      <tspan
+                        className={`text-3xl font-bold mb-5`}
+                        fill="var(--emotion-current)"
+                      >
+                        {emotionScore.score + unit}
                       </tspan>
                       <tspan
                         x={viewBox.cx}

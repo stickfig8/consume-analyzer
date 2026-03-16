@@ -1,5 +1,4 @@
-import { getEmotionColor } from "@/utils/chartUtils";
-import type { ExpenseSummary } from "@/types/clientTypes";
+import type { EmotionLevel, ExpenseSummary } from "@/types/clientTypes";
 import {
   Bar,
   BarChart,
@@ -11,12 +10,12 @@ import {
 
 type Props = {
   summary: ExpenseSummary;
-  score: number;
+  emotionLevel: EmotionLevel;
   isExporting: boolean;
 };
 export default function ExpenseBarChart({
   summary,
-  score,
+  emotionLevel,
   isExporting,
 }: Props) {
   const chartData = [
@@ -26,14 +25,14 @@ export default function ExpenseBarChart({
       fill: "var(--fixed-color)",
     },
     {
-      type: "루틴 소비",
+      type: "일상 소비",
       value: summary.prices.routine,
       fill: "var(--routine-color)",
     },
     {
       type: "감정 소비",
       value: summary.prices.emotional,
-      fill: getEmotionColor(score),
+      fill: `var(--${emotionLevel})`,
     },
   ];
 

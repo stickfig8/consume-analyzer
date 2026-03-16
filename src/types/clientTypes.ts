@@ -79,4 +79,5 @@ export type AnalysisStatus =
 // 로딩 현황 타입
 export type LoadingStatus = "classifying" | "calculating" | "insighting";
 
+// 기간 타입
 export type Period = "month" | "week" | "day";

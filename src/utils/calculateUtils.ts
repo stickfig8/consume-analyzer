@@ -41,24 +41,30 @@ export function calculateSummary(
   };
 }
 
+export function getEmotionLevelByScore(score: number): EmotionLevel {
+  if (score < 20) return "low";
+  else if (score < 40) return "mediumLow";
+  else if (score < 60) return "medium";
+  else if (score < 80) return "mediumHigh";
+  else return "high";
+}
+
 export function calculateEmotion(summary: ExpenseSummary): EmotionScore {
   const emotional = summary.percentage.emotional;
 
-  let level: EmotionLevel;
+  let baseScore = emotional * 2; // 기본 2배
 
-  const score = Math.round(Math.min(100, (emotional / 50) * 100));
-
-  if (emotional <= 15) {
-    level = "low";
-  } else if (emotional <= 25) {
-    level = "mediumLow";
-  } else if (emotional <= 40) {
-    level = "medium";
-  } else if (emotional <= 50) {
-    level = "mediumHigh";
-  } else {
-    level = "high";
+  if (emotional > summary.percentage.routine) {
+    baseScore += 10;
   }
+
+  if (emotional > summary.percentage.fixed) {
+    baseScore += 15;
+  }
+
+  const score = Math.min(100, Math.round(baseScore));
+
+  const level = getEmotionLevelByScore(score);
 
   return {
     score,
@@ -112,15 +118,4 @@ export function extractCandidates(
 
   // 상위 4개 추출
   return candidates.sort((a, b) => b.adjustScore - a.adjustScore).slice(0, 4);
-}
-
-export function getPercentColor(percentText: string) {
-  const numeric = Number(percentText.replace("%", ""));
-
-  if (isNaN(numeric)) return "text-purple-500";
-
-  if (numeric < 20) return "text-emerald-500"; // 초록
-  if (numeric < 40) return "text-yellow-500"; // 노랑
-  if (numeric < 60) return "text-orange-500"; // 주황
-  return "text-red-500"; // 빨강
 }

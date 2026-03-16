@@ -24,20 +24,23 @@ export default function OverViewCard({
     <CommonMotionDiv delay={1.0}>
       <CommonAppCard>
         <article className="w-full h-fit flex flex-col gap-5 p-4">
-          <ResultCardTitle title="📊 요약" />
+          <ResultCardTitle title="📊  요약" />
           <div className="flex gap-5 h-[200px] max-[900px]:h-[100px]">
             <RadialChart
-              score={emotionScore.score}
+              emotionScore={emotionScore}
               unit="점"
               desc="감정 소비 점수"
               isExporting={isExporting}
             />
             <CompareCard
               summary={summary}
-              score={emotionScore.score}
+              emotionLevel={emotionScore.level}
               isExporting={isExporting}
             />
-            <MobileCompareCard summary={summary} score={emotionScore.score} />
+            <MobileCompareCard
+              summary={summary}
+              emotionLevel={emotionScore.level}
+            />
           </div>
 
           <p className="text-sm leading-relaxed text-foreground max-[900px]:text-[13px]">

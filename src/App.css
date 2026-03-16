@@ -84,9 +84,14 @@
   --sub-button: #9ca3af;
   --fixed-color: #64748b; /* slate-500 */
   --routine-color: #0ea5e9; /* sky-500 */
-  --emotion-low: #16a34a;
-  --emotion-mid: #f59e0b;
-  --emotion-high: #dc2626;
+
+  --low: #16a34a;
+  --mediumLow: #65a30d;
+  --medium: #eab308;
+  --mediumHigh: #f97316;
+  --high: #dc2626;
+
+  --emotion-current: #000000;
 }
 
 .dark {
@@ -155,17 +160,22 @@
   animation: shake 0.4s ease-in-out;
 }
 
-.radial-low {
-  --radial-color: #16a34a;
-}
-.radial-midlow {
-  --radial-color: #eab308;
-}
-.radial-midhigh {
-  --radial-color: #f97316;
-}
-.radial-high {
-  --radial-color: #dc2626;
+@media (max-width: 900px) {
+  .emotion-low {
+    --emotion-current: var(--low);
+  }
+  .emotion-mediumLow {
+    --emotion-current: var(--mediumLow);
+  }
+  .emotion-medium {
+    --emotion-current: var(--medium);
+  }
+  .emotion-mediumHigh {
+    --emotion-current: var(--mediumHigh);
+  }
+  .emotion-high {
+    --emotion-current: var(--high);
+  }
 }
 
 .scrollbar-style::-webkit-scrollbar {

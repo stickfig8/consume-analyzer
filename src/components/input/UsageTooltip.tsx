@@ -39,6 +39,9 @@ export default function UsageTooltip({ onTestClick }: Props) {
             <p>• 분석 결과는 감정 소비 지수와 패턴을 제공합니다.</p>
           </div>
 
+          <p className="text-[10px] text-red-500 mt-1">
+            AI 분석 결과는 입력 데이터를 기반으로 생성된 참고용 해석입니다.
+          </p>
           {/* 구분선 */}
           <div className="border-t border-border/60" />
 

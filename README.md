@@ -36,6 +36,8 @@ LLM 기반 분석을 통한 감정 소비 리포트 서비스입니다.
 - [shadcn](https://ui.shadcn.com/)
 - [Gemini API](https://ai.google.dev/aistudio?hl=ko)
 - [Vercel Serverless](https://vercel.com/templates/other/nodejs-serverless-function-express)
+- [html2canvas](https://html2canvas.hertzen.com)
+- [axios](https://axios-http.com/kr/)
 - [Vite](https://ko.vite.dev/)
 - [eslint + prettier](https://eslint.org/)
 - [Vercel](https://vercel.com/home)

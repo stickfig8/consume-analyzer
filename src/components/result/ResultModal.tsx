@@ -30,7 +30,7 @@ export default function ResultModal({
   cancel,
 }: Props) {
   const { reportRef, handleDownloadPDF, isExporting } = useExportReport();
-  const { loading, saveReport } = useSaveReport();
+  const { saveReport } = useSaveReport();
 
   return (
     <ModalBackground

@@ -1,13 +1,12 @@
 //import { categoryWeight } from "@/configs/candidateConfigs";
-import type {
-  EmotionLevel,
-  //EmotionScore,
-  // Expense,
-  // ExpenseSummary,
-  // ImproveCandidate,
-  // RiskLevel,
-  // StructureType,
-} from "@/types/clientTypes";
+import type {} from //EmotionScore,
+// Expense,
+// ExpenseSummary,
+// ImproveCandidate,
+// RiskLevel,
+// StructureType,
+"@/types/clientTypes";
+import type { EmotionLevel } from "@/types/responseTypes";
 //import type { LLMClassification } from "@/types/responseTypes";
 
 // export function calculateSummary(

@@ -24,3 +24,6 @@ export type LoadingStatus = "classifying" | "calculating" | "insighting";
 
 // 기간 타입
 export type Period = "monthly" | "weekly" | "daily";
+
+// 리포트 카드 종류 타입
+export type ReportCardType = "pattern" | "improve" | "risk";

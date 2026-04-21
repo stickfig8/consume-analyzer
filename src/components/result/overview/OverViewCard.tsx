@@ -1,4 +1,4 @@
-import type { EmotionScore, ExpenseSummary } from "@/types/clientTypes";
+import type { EmotionScore, ExpenseSummary } from "@/types/responseTypes";
 
 import CommonMotionDiv from "../common/CommonMotionDiv";
 import CommonAppCard from "@/components/common/CommonAppCard";

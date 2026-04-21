@@ -1,4 +1,6 @@
-import type { AnalysisResult, AnalysisStatus } from "@/types/clientTypes";
+import type { AnalysisStatus } from "@/types/clientTypes";
+import type { Report } from "@/types/responseTypes";
+
 import ModalBackground from "../common/ModalBackground";
 
 import CommonReportCard from "./common/CommonReportCard";
@@ -10,10 +12,11 @@ import ErrorPresentation from "./request/ErrorPresentation";
 import LoadingIndicator from "./request/LoadingIndicator";
 
 import { useExportReport } from "@/hooks/useExportReport";
+import { useSaveReport } from "@/hooks/useSaveReport";
 
 type Props = {
   status: AnalysisStatus;
-  result: AnalysisResult | null;
+  result: Report | null;
   error: string | null;
   onClose: () => void;
   cancel: () => void;
@@ -27,6 +30,7 @@ export default function ResultModal({
   cancel,
 }: Props) {
   const { reportRef, handleDownloadPDF, isExporting } = useExportReport();
+  const { loading, saveReport } = useSaveReport();
 
   return (
     <ModalBackground
@@ -82,7 +86,8 @@ export default function ResultModal({
               <ModalButtons
                 isExporting={isExporting}
                 onClose={onClose}
-                onSave={() => handleDownloadPDF(result.period)}
+                onSave={() => saveReport(result)}
+                onExport={() => handleDownloadPDF(result.period)}
               />
             </div>
           </div>

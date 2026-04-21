@@ -1,22 +1,10 @@
-import type {
-  AnalysisResult,
-  AnalysisStatus,
-  Expense,
-  Period,
-} from "@/types/clientTypes";
+import type { AnalysisStatus, Expense, Period } from "@/types/clientTypes";
+import type { Report } from "@/types/responseTypes";
+import axios from "axios";
 import { useEffect, useRef, useState } from "react";
-import { requestClassify } from "@/sevices/classify";
-import {
-  calculateEmotion,
-  calculateRiskLevel,
-  calculateStructureType,
-  calculateSummary,
-  extractCandidates,
-} from "@/utils/calculateUtils";
-import { requestInsight } from "@/sevices/insight";
 
 export function useExpenseAnalysis() {
-  const [result, setResult] = useState<AnalysisResult | null>(null);
+  const [result, setResult] = useState<Report | null>(null);
   const [status, setStatus] = useState<AnalysisStatus>("idle");
   const [error, setError] = useState<string | null>(null);
 
@@ -39,60 +27,30 @@ export function useExpenseAnalysis() {
     abortRef.current = controller;
 
     try {
-      // 1: LLM 분류
       setStatus("classifying");
-      const classification = await requestClassify(expenses, controller.signal);
-
-      // 2: 클라이언트 요약 계산
-      setStatus("calculating");
-      const summary = calculateSummary(expenses, classification);
-
-      const candidates = extractCandidates(
-        expenses,
-        classification,
-        summary.totalExpense,
-      );
-
-      // 3: 클라이언트 감정 점수, 소비구조, 리스크 단계 계산
-      const emotionScore = calculateEmotion(summary);
-
-      const structureType = calculateStructureType(summary);
-
-      const riskLevel = calculateRiskLevel(emotionScore.score);
-
-      // 4: LLM 해석
-      setStatus("insighting");
-      const insight = await requestInsight(
+      const res = await axios.post(
+        import.meta.env.VITE_API_BASE_URL + "/api/reports/generate",
+        { expenses, period },
         {
-          total: summary.totalExpense,
-          fixedPercent: summary.percentage.fixed,
-          routinePercent: summary.percentage.routine,
-          emotionalPercent: summary.percentage.emotional,
-          emotionScore: emotionScore.score,
-          emotionLevel: emotionScore.level,
-          candidates,
-          period,
-          structureType,
-          riskLevel,
+          signal: controller.signal,
         },
-        controller.signal,
       );
+      console.log(res.data);
 
-      // 5: 최종 결과
-      setResult({
-        summary,
-        emotionScore,
-        insight,
-        period,
-      });
+      setResult(res.data.data);
       setStatus("success");
     } catch (err: any) {
-      if (err.status === 499) {
+      if (axios.isCancel(err)) {
         console.log("Request cancelled");
         return;
       }
 
-      if (err.status === 503) {
+      if (err.code === "ERR_CANCELED") {
+        console.log("Request cancelled");
+        return;
+      }
+
+      if (err.response?.status === 503) {
         setError("현재 분석 요청이 많습니다. 잠시 후 다시 시도해주세요.");
       } else {
         setError("분석 중 오류가 발생했습니다.");

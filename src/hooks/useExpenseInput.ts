@@ -7,7 +7,7 @@ export function useExpenseInput() {
     Array.from({ length: 5 }, () => createEmptyExpense()),
   );
 
-  const [period, setPeriod] = useState<Period>("month");
+  const [period, setPeriod] = useState<Period>("monthly");
 
   function createEmptyExpense(): Expense {
     return {

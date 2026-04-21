@@ -1,4 +1,4 @@
-import type { EmotionScore } from "@/types/clientTypes";
+import type { EmotionScore } from "@/types/responseTypes";
 import {
   RadialBarChart,
   RadialBar,

@@ -1,4 +1,4 @@
-import type { EmotionLevel, ExpenseSummary } from "@/types/clientTypes";
+import type { EmotionLevel, ExpenseSummary } from "@/types/responseTypes";
 import {
   Bar,
   BarChart,

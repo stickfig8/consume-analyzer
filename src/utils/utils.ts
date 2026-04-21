@@ -11,7 +11,7 @@ export function getToday(devide: string = "-") {
 }
 
 export function parsePeriod(period: Period) {
-  if (period === "month") return "월간 소비";
-  else if (period === "week") return "주간 소비";
+  if (period === "monthly") return "월간 소비";
+  else if (period === "weekly") return "주간 소비";
   else return "일간 소비";
 }

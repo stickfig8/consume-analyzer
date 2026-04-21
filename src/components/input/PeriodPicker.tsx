@@ -5,7 +5,7 @@ type Props = {
   onClick: (period: Period) => void;
 };
 
-const periods: Period[] = ["month", "week", "day"];
+const periods: Period[] = ["monthly", "weekly", "daily"];
 
 export default function PeriodPicker({ selected, onClick }: Props) {
   return (
@@ -23,7 +23,7 @@ export default function PeriodPicker({ selected, onClick }: Props) {
             }`}
             onClick={() => onClick(period)}
           >
-            {period === "day" ? "일" : period === "week" ? "주" : "월"}
+            {period === "daily" ? "일" : period === "weekly" ? "주" : "월"}
           </button>
         ))}
       </div>
